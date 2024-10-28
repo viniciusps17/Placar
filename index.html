@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Placar de Jogo</title>
+    <title>Placar de Jogo com Temporizador</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +15,7 @@
             display: flex;
             justify-content: center;
             gap: 50px;
-            margin-top: 50px;
+            margin-top: 20px;
         }
         .time {
             padding: 20px;
@@ -27,6 +27,10 @@
             font-size: 48px;
             font-weight: bold;
         }
+        .temporizador {
+            font-size: 36px;
+            margin-top: 20px;
+        }
         button {
             margin: 5px;
             padding: 10px;
@@ -36,12 +40,16 @@
     </style>
 </head>
 <body>
-<!-- Temporizador -->
-<div class="temporizador" id="temporizador">00:00</div>
-<button onclick="iniciarTemporizador()">Iniciar</button>
-<button onclick="pausarTemporizador()">Pausar</button>
-<button onclick="zerarTemporizador()">Zerar</button>
-    <h1>Placar do Jogo</h1>
+
+    <h1>Placar do Jogo com Temporizador</h1>
+    
+    <!-- Temporizador -->
+    <div class="temporizador" id="temporizador">00:00</div>
+    <button onclick="iniciarTemporizador()">Iniciar</button>
+    <button onclick="pausarTemporizador()">Pausar</button>
+    <button onclick="zerarTemporizador()">Zerar</button>
+
+    <!-- Placar -->
     <div class="placar">
         <div class="time">
             <h2>Time A</h2>
@@ -58,6 +66,7 @@
     </div>
 
     <script>
+        // Funções de Pontuação
         function incrementar(id) {
             const elemento = document.getElementById(id);
             elemento.textContent = parseInt(elemento.textContent) + 1;
@@ -70,46 +79,47 @@
                 elemento.textContent = valorAtual - 1;
             }
         }
+
         // Variáveis do Temporizador
-let minutos = 0;
-let segundos = 0;
-let intervalo;
+        let minutos = 0;
+        let segundos = 0;
+        let intervalo;
 
-// Função para atualizar o display do temporizador
-function atualizarDisplay() {
-    const display = document.getElementById("temporizador");
-    const minutosFormatados = String(minutos).padStart(2, "0");
-    const segundosFormatados = String(segundos).padStart(2, "0");
-    display.textContent = ${minutosFormatados}:${segundosFormatados};
-}
+        // Função para atualizar o display do temporizador
+        function atualizarDisplay() {
+            const display = document.getElementById("temporizador");
+            const minutosFormatados = String(minutos).padStart(2, "0");
+            const segundosFormatados = String(segundos).padStart(2, "0");
+            display.textContent = ${minutosFormatados}:${segundosFormatados};
+        }
 
-// Função para iniciar o temporizador
-function iniciarTemporizador() {
-    if (!intervalo) {  // Evita iniciar múltiplos intervalos
-        intervalo = setInterval(() => {
-            segundos++;
-            if (segundos === 60) {
-                minutos++;
-                segundos = 0;
+        // Função para iniciar o temporizador
+        function iniciarTemporizador() {
+            if (!intervalo) {  // Evita iniciar múltiplos intervalos
+                intervalo = setInterval(() => {
+                    segundos++;
+                    if (segundos === 60) {
+                        minutos++;
+                        segundos = 0;
+                    }
+                    atualizarDisplay();
+                }, 1000);
             }
+        }
+
+        // Função para pausar o temporizador
+        function pausarTemporizador() {
+            clearInterval(intervalo);
+            intervalo = null;
+        }
+
+        // Função para zerar o temporizador
+        function zerarTemporizador() {
+            pausarTemporizador();
+            minutos = 0;
+            segundos = 0;
             atualizarDisplay();
-        }, 1000);
-    }
-}
-
-// Função para pausar o temporizador
-function pausarTemporizador() {
-    clearInterval(intervalo);
-    intervalo = null;
-}
-
-// Função para zerar o temporizador
-function zerarTemporizador() {
-    pausarTemporizador();
-    minutos = 0;
-    segundos = 0;
-    atualizarDisplay();
-}
+        }
     </script>
 </body>
 </html>
