@@ -69,3 +69,128 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placar de Jogo com Temporizador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: #fff;
+        }
+        .placar {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 20px;
+        }
+        .time {
+            padding: 20px;
+            background-color: #444;
+            border-radius: 10px;
+            width: 150px;
+        }
+        .pontuacao {
+            font-size: 48px;
+            font-weight: bold;
+        }
+        .temporizador {
+            font-size: 36px;
+            margin-top: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Placar do Jogo com Temporizador</h1>
+    
+    <!-- Temporizador -->
+    <div class="temporizador" id="temporizador">00:00</div>
+    <button onclick="iniciarTemporizador()">Iniciar</button>
+    <button onclick="pausarTemporizador()">Pausar</button>
+    <button onclick="zerarTemporizador()">Zerar</button>
+
+    <!-- Placar -->
+    <div class="placar">
+        <div class="time">
+            <h2>Time A</h2>
+            <div class="pontuacao" id="pontuacaoA">0</div>
+            <button onclick="incrementar('pontuacaoA')">+1</button>
+            <button onclick="decrementar('pontuacaoA')">-1</button>
+        </div>
+        <div class="time">
+            <h2>Time B</h2>
+            <div class="pontuacao" id="pontuacaoB">0</div>
+            <button onclick="incrementar('pontuacaoB')">+1</button>
+            <button onclick="decrementar('pontuacaoB')">-1</button>
+        </div>
+    </div>
+
+    <script>
+        // Funções de Pontuação
+        function incrementar(id) {
+            const elemento = document.getElementById(id);
+            elemento.textContent = parseInt(elemento.textContent) + 1;
+        }
+        
+        function decrementar(id) {
+            const elemento = document.getElementById(id);
+            const valorAtual = parseInt(elemento.textContent);
+            if (valorAtual > 0) {
+                elemento.textContent = valorAtual - 1;
+            }
+        }
+
+        // Variáveis do Temporizador
+        let minutos = 0;
+        let segundos = 0;
+        let intervalo;
+
+        // Função para atualizar o display do temporizador
+        function atualizarDisplay() {
+            const display = document.getElementById("temporizador");
+            const minutosFormatados = String(minutos).padStart(2, "0");
+            const segundosFormatados = String(segundos).padStart(2, "0");
+            display.textContent = ${minutosFormatados}:${segundosFormatados};
+        }
+
+        // Função para iniciar o temporizador
+        function iniciarTemporizador() {
+            if (!intervalo) {
+                intervalo = setInterval(() => {
+                    segundos++;
+                    if (segundos === 60) {
+                        minutos++;
+                        segundos = 0;
+                    }
+                    atualizarDisplay();
+                }, 1000);
+            }
+        }
+
+        // Função para pausar o temporizador
+        function pausarTemporizador() {
+            clearInterval(intervalo);
+            intervalo = null;
+        }
+
+        // Função para zerar o temporizador
+        function zerarTemporizador() {
+            pausarTemporizador();
+            minutos = 0;
+            segundos = 0;
+            atualizarDisplay();
+        }
+    </script>
+</body>
+</html>
