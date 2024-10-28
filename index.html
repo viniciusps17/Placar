@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placar de Jogo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: #fff;
+        }
+        .placar {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+        }
+        .time {
+            padding: 20px;
+            background-color: #444;
+            border-radius: 10px;
+            width: 150px;
+        }
+        .pontuacao {
+            font-size: 48px;
+            font-weight: bold;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Placar do Jogo</h1>
+    <div class="placar">
+        <div class="time">
+            <h2>Time A</h2>
+            <div class="pontuacao" id="pontuacaoA">0</div>
+            <button onclick="incrementar('pontuacaoA')">+1</button>
+            <button onclick="decrementar('pontuacaoA')">-1</button>
+        </div>
+        <div class="time">
+            <h2>Time B</h2>
+            <div class="pontuacao" id="pontuacaoB">0</div>
+            <button onclick="incrementar('pontuacaoB')">+1</button>
+            <button onclick="decrementar('pontuacaoB')">-1</button>
+        </div>
+    </div>
+
+    <script>
+        function incrementar(id) {
+            const elemento = document.getElementById(id);
+            elemento.textContent = parseInt(elemento.textContent) + 1;
+        }
+        
+        function decrementar(id) {
+            const elemento = document.getElementById(id);
+            const valorAtual = parseInt(elemento.textContent);
+            if (valorAtual > 0) {
+                elemento.textContent = valorAtual - 1;
+            }
+        }
+    </script>
+</body>
+</html>
